@@ -1,11 +1,11 @@
 import re
 import argparse
 import torch
+import warnings
 import pandas as pd
-from tqdm.auto import tqdm
-
 import pytorch_lightning as pl
 
+from tqdm.auto import tqdm
 from dataloader import Dataloader
 
 
@@ -21,6 +21,9 @@ if __name__ == '__main__':
     parser.add_argument('--test_path', default='/opt/ml/dataset/train/val_split.csv')
     parser.add_argument('--predict_path', default='/opt/ml/dataset/test/test_data.csv')
     args = parser.parse_args(args=[])
+
+    # Ignore UserWarning
+    warnings.filterwarnings(action='ignore', category=UserWarning)
 
     dataloader = Dataloader(
         args.tokenizer_name,
