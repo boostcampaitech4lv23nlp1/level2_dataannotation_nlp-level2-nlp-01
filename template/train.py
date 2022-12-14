@@ -10,8 +10,8 @@ import pytorch_lightning as pl
 import wandb
 from pytorch_lightning.loggers import WandbLogger
 
-from dataloader import *
-from models import *
+from dataloader import Dataloader
+from models import Model
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -20,10 +20,10 @@ if __name__ == '__main__':
     parser.add_argument('--batch_size', default=16, type=int)
     parser.add_argument('--max_epoch', default=5, type=int)
     parser.add_argument('--learning_rate', default=1e-5, type=float)
-    parser.add_argument('--train_path', default='/opt/ml/dataset/train/train_split.csv')
-    parser.add_argument('--dev_path', default='/opt/ml/dataset/train/val_split.csv')
-    parser.add_argument('--test_path', default='/opt/ml/dataset/train/val_split.csv')
-    parser.add_argument('--predict_path', default='/opt/ml/dataset/test/test_data.csv')
+    parser.add_argument('--train_path', default='../dataset/train/train.csv')
+    parser.add_argument('--dev_path', default='../dataset/train/validation.csv')
+    parser.add_argument('--test_path', default='../dataset/test/evaluation.csv')
+    parser.add_argument('--predict_path', default='../dataset/test/evaluation.csv')
     args = parser.parse_args(args=[])  
 
     dataloader = Dataloader(
