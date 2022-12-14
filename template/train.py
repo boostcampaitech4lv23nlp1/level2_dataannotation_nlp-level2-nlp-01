@@ -1,15 +1,12 @@
 import re
 import argparse
+import warnings
 
 import torch
-import pandas as pd
-import pickle as pkl
-from tqdm.auto import tqdm
 import pytorch_lightning as pl
-
 import wandb
 from pytorch_lightning.loggers import WandbLogger
-
+from tqdm.auto import tqdm
 from dataloader import Dataloader
 from models import Model
 
@@ -17,14 +14,17 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--tokenizer_name', default='klue/roberta-large', type=str)
     parser.add_argument('--model_name', default='klue/roberta-large', type=str)
-    parser.add_argument('--batch_size', default=16, type=int)
-    parser.add_argument('--max_epoch', default=5, type=int)
+    parser.add_argument('--batch_size', default=32, type=int)
+    parser.add_argument('--max_epoch', default=10, type=int)
     parser.add_argument('--learning_rate', default=1e-5, type=float)
     parser.add_argument('--train_path', default='../dataset/train/train.csv')
     parser.add_argument('--dev_path', default='../dataset/train/validation.csv')
     parser.add_argument('--test_path', default='../dataset/test/evaluation.csv')
     parser.add_argument('--predict_path', default='../dataset/test/evaluation.csv')
     args = parser.parse_args(args=[])  
+
+    # Ignore UserWarning
+    warnings.filterwarnings(action='ignore', category=UserWarning)
 
     dataloader = Dataloader(
         args.tokenizer_name,
